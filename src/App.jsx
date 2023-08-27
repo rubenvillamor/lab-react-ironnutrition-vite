@@ -1,22 +1,33 @@
-import { useState } from "react";
 import "./App.css";
-import FoodBox from "./components/FoodBox";
 import foodsJson from "./foods.json";
+import FoodBox from "./components/FoodBox";
+import { useState } from "react";
 import AddFoodForm from "./components/AddFoodForm";
+import Search from "./components/Search";
 
 function App() {
+  const [foods, setFoods] = useState(foodsJson);
 
-  const [ allFoods, setAllFoods ] = useState(foodsJson) // Valor inicial
+  // solo la vista del usuario
+  const [foodsRender, setFoodsRender] = useState(foods);
+
+  const deleteFood = (id) => {
+    const updatedFoods = foods.filter((food) => food.id !== id);
+
+    setFoods(updatedFoods);
+  };
+
+  const addFood = (newFood) => {
+    setFoods([...foods, newFood]);
+  };
+
   return (
-    <div className="App">
-      {/* <FoodBox
-        food={foodsJson[0]}
-      /> */}
-      <AddFoodForm setAllFoods={setAllFoods} />
-      {allFoods.map((eachFood)=> {
-        return <FoodBox key= {eachFood.id} food={eachFood} setAllFoods={setAllFoods} allFoods={allFoods} />
-      })}
-
+    <div>
+      <Search foods={foods} setFoodsRender={setFoodsRender} />
+      <AddFoodForm addFood={addFood} foods={foods} />
+      {foods.map((food, i) => (
+        <FoodBox key={i} food={food} deleteFood={deleteFood} />
+      ))}
     </div>
   );
 }

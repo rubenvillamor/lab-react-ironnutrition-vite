@@ -1,34 +1,21 @@
-// Your code here
-
-import React from "react";
-
-function FoodBox(props) {
-
-  const { calories, image, name, servings, id } = props.food
-
-  const handleDelete = () => {
-    const filteredFoods = props.allFoods.filter((eachFood) => {
-      return eachFood.id !== id
-    })
-    props.setAllFoods (filteredFoods)
-  }
+const FoodBox = (props) => {
+  const { id,name, calories, image, servings } = props.food;
+  const handleDeleteClick = () => {
+    props.deleteFood(id); 
+  };
 
   return (
     <div>
       <p>{name}</p>
-
-      <img src={image} width={150}/>
-
+      <img src={image} style={{width:"200px"}}/>
       <p>Calories: {calories}</p>
       <p>Servings: {servings}</p>
-
       <p>
-        <b>Total Calories: {servings * calories}</b> kcal
+        <b>Total Calories: {calories * servings} kcal</b>
       </p>
-
-      <button onClick={handleDelete}>Delete</button>
+      <button onClick={handleDeleteClick}>Delete</button>
     </div>
   );
-}
+};
 
 export default FoodBox;

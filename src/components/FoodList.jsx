@@ -1,46 +1,29 @@
-import React, { useState } from "react";
 import foodsJson from "../foods.json";
+import { useState } from "react";
 import FoodBox from "./FoodBox";
 import AddFoodForm from "./AddFoodForm";
+import Search from "./Search";
 
-export default function FoodList() {
-  const [allFood, setAllFood] = useState(foodsJson);
-  const [foodToRender, setFoodToRender] = useState(allFood);
+function FoodList() {
+  const [allFoods, setAllFoods] = useState(foodsJson);
+
+  const [foodsRender, setFoodsRender] = useState(foodsJson);
 
   return (
-    <div>
-      <h1>TODA LA COMIDA</h1>
-      <br />
+    <>
+      <h1>React IronNutrition</h1>
 
-      <AddFoodForm
-        foodToRender={foodToRender}
-        setFoodToRender={setFoodToRender}
-        setAllFood={setAllFood}
+      <AddFoodForm foodsRender={foodsRender} setFoodsRender={setFoodsRender} />
+
+      <Search allFoods={allFoods} setFoodsRender={setFoodsRender} />
+
+      <FoodBox
+        foodsRender={foodsRender}
+        setAllFoods={setAllFoods}
+        setFoodsRender={setFoodsRender}
       />
-
-      <hr />
-      <br />
-      <div
-        style={{
-          display: "flex",
-          gap: "10px",
-          flexWrap: "wrap",
-          justifyContent: "center",
-        }}
-      >
-        {foodToRender.map((eachFood, i) => {
-          return (
-            <div key={i}>
-              <FoodBox
-                oneFood={eachFood}
-                foodToRender={foodToRender}
-                setFoodToRender={setFoodToRender}
-                index={i}
-              />
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    </>
   );
 }
+
+export default FoodList;
